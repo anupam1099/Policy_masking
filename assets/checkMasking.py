@@ -27,24 +27,19 @@ def maskedChecker(Input_List):
 
     for str in Input_List:
         str.strip(' ')
-
         EngineNo = use_regex(str, regex_EngineNotMasked)
         ChassisNo = use_regex(str, regex_ChassisNotMasked)
-
         maskedEngineNo = use_regex(str, regex_EngineMasked)
         maskedChassisNo = use_regex(str, regex_ChassisMasked)
-
         if (EngineNo != None):
             Engine['EngineNo'] = str
         if (ChassisNo != None):
             Chassis['ChassisNo'] = str
         if (maskedEngineNo != None):
-            Engine.update({'masked': True})
-            Engine.update({"EngineNo": str})
+            Engine.update({'masked': True, "EngineNo": str})
         if (maskedChassisNo != None):
-            Chassis.update({'masked': True})
-            Chassis.update({"ChassisNo": str})
-        response['Engine'] = Engine
-        response['Chassis'] = Chassis
+            Chassis.update({'masked': True, "ChassisNo": str})
 
+    response['Engine'] = Engine
+    response['Chassis'] = Chassis
     return response

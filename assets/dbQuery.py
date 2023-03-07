@@ -6,6 +6,9 @@ def makeQuery(dbConfig, intermediaryId, limit):
         dbConfig["table"] + " where intermediary_id=" + \
         intermediaryId + " ORDER BY id DESC LIMIT " + limit
 
+    # psqlQuery = "SELECT * FROM public." + \
+    #     dbConfig["table"] + " where intermediary_id=" + \
+    #     intermediaryId + " ORDER BY updated_on DESC LIMIT " + limit
     return psqlQuery
 
 
@@ -22,7 +25,6 @@ def policyList(dbConfig, intermediaryId, limit,):
     except psycopg2.DatabaseError as e:
         print("ERROR ==> ", e)
         return None
-    cursor_obj = connection.cursor()
-    cursor_obj.execute(QUERY)
-    result = cursor_obj.fetchall()
-    return result
+    cursor = connection.cursor()
+    cursor.execute(QUERY)
+    return cursor.fetchall()

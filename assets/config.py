@@ -7,7 +7,7 @@ dbConfig = {
     "table": "ackore_policy"
 }
 intermediaryId = "205"
-limit = "100"
+limit = "10000"
 env = {
     "dev": "https://ackodev.com",
     "prod": "https://acko.com"
