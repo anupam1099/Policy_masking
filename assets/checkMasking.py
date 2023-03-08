@@ -1,4 +1,5 @@
 import re
+from assets.config import regex_ChassisMasked, regex_ChassisNotMasked, regex_EngineMasked, regex_EngineNotMasked
 
 
 def use_regex(input_text, regex):
@@ -6,13 +7,6 @@ def use_regex(input_text, regex):
 
 
 def maskedChecker(Input_List):
-    # masked regex
-    regex_EngineMasked = "X{9}[0-9]{5}"
-    regex_ChassisMasked = "X{11}[0-9]{5}"
-
-    # unmasked regex
-    regex_EngineNotMasked = "[A-Z]{2}[0-9]{2}[A-Z]{5}[0-9]{5}"
-    regex_ChassisNotMasked = "[(A-H|J-N|P|R-Z|0-9)]{17}"
 
     # response build
     response = dict()
