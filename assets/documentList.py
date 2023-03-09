@@ -1,4 +1,4 @@
-from assets.config import env
+from assets.constants import env
 
 
 def extract_document(policyId, policy, ENV):

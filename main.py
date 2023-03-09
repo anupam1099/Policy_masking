@@ -3,7 +3,7 @@ import sys
 import json
 
 # assets
-from assets.config import dbConfig, intermediaryId, limit
+from assets.constants import dbConfig, intermediaryId, limit
 from assets.dbQuery import policyList
 from assets.documentList import extract_documents
 from assets.generateLog import generateLog
