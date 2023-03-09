@@ -1,9 +1,19 @@
-import re
 from assets.constants import regex_ChassisMasked, regex_ChassisNotMasked, regex_EngineMasked, regex_EngineNotMasked, regex_Mobile, regex_Email, regex_EmailNotMasked, regex_MobileNotMasked
+from assets.utils import use_regex
 
 
-def use_regex(input_text, regex):
-    return re.match(regex, input_text)
+def applyRegex(text, unMaskedRegex, MaskedRegex, key):
+    unMaskedText = use_regex(text, unMaskedRegex)
+    maskedText = use_regex(text, MaskedRegex)
+    response = {
+        "masked": False,
+        key: ""
+    }
+    if (unMaskedText != None):
+        response[key] = text
+    if (maskedText != None):
+        response.update({'masked': True, key: text})
+    return response
 
 
 def maskedChecker(Input_List):
@@ -29,36 +39,24 @@ def maskedChecker(Input_List):
         str.strip(' ')
 
         # ENGINE
-        EngineNo = use_regex(str, regex_EngineNotMasked)
-        maskedEngineNo = use_regex(str, regex_EngineMasked)
-        if (EngineNo != None):
-            Engine['EngineNo'] = str
-        if (maskedEngineNo != None):
-            Engine.update({'masked': True, "EngineNo": str})
+        if (Engine['EngineNo'] == ""):
+            Engine = applyRegex(str, regex_EngineNotMasked,
+                                regex_EngineMasked, "EngineNo")
 
         # CHASSIS
-        ChassisNo = use_regex(str, regex_ChassisNotMasked)
-        maskedChassisNo = use_regex(str, regex_ChassisMasked)
-        if (ChassisNo != None):
-            Chassis['ChassisNo'] = str
-        if (maskedChassisNo != None):
-            Chassis.update({'masked': True, "ChassisNo": str})
+        if (Chassis['ChassisNo'] == ""):
+            Chassis = applyRegex(str, regex_ChassisNotMasked,
+                                 regex_ChassisMasked, "ChassisNo")
 
         # MOBILE
-        MobileNo = use_regex(str, regex_MobileNotMasked)
-        maskedMobileNo = use_regex(str, regex_Mobile)
-        if (MobileNo != None):
-            Mobile['mobileNo'] = str
-        if (maskedMobileNo != None):
-            Mobile.update({'masked': True, "mobileNo": str})
+        if (Mobile['mobileNo'] == ""):
+            Mobile = applyRegex(str, regex_MobileNotMasked,
+                                regex_Mobile, "mobileNo")
 
         # EMAIL
-        email = use_regex(str, regex_EmailNotMasked)
-        maskedEmail = use_regex(str, regex_Email)
-        if (email != None and Email['email'] == ""):
-            Email['email'] = str
-        if (maskedEmail != None and Email['email'] == ""):
-            Email.update({'masked': True, "email": str})
+        if (Email['email'] == ""):
+            Email = applyRegex(str, regex_EmailNotMasked,
+                               regex_Email, "email")
 
     # Build Respose
     response['Engine'] = Engine

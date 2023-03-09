@@ -7,8 +7,8 @@ dbConfig = {
     "port": "5432",
     "table": "ackore_policy"
 }
-intermediaryId = "205"
-limit = "10000"
+intermediaryId = "205"  # amazon
+limit = "5"
 
 # environment
 env = {

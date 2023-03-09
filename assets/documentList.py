@@ -2,13 +2,13 @@ from assets.constants import env
 
 
 def extract_document(policyId, policy, ENV):
-    response = dict()
-    response['policy_id'] = policyId
+    document = dict()
+    document['policy_id'] = policyId
     try:
-        response['pdf'] = env[ENV]+policy['document']
+        document['pdf'] = env[ENV]+policy['document']
     except:
-        response['pdf'] = None
-    return response
+        document['pdf'] = None
+    return document
 
 
 def extract_documents(data, ENV):

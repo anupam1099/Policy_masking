@@ -1,18 +1,22 @@
 import psycopg2
+from assets.constants import dbConfig, intermediaryId, limit
+from assets.utils import printError
 
 
+# Generating SQL Query
 def makeQuery(dbConfig, intermediaryId, limit):
-    psqlQuery = "SELECT * FROM public." + \
+    sqlQuery = "SELECT * FROM public." + \
         dbConfig["table"] + " where intermediary_id=" + \
         intermediaryId + " ORDER BY id DESC LIMIT " + limit
 
     # psqlQuery = "SELECT * FROM public." + \
     #     dbConfig["table"] + " where intermediary_id=" + \
     #     intermediaryId + " ORDER BY updated_on DESC LIMIT " + limit
-    return psqlQuery
+    return sqlQuery
 
 
-def policyList(dbConfig, intermediaryId, limit,):
+# DB connection and SQL query Execution
+def policyList():
     QUERY = makeQuery(dbConfig, intermediaryId, limit)
     try:
         connection = psycopg2.connect(
@@ -22,9 +26,13 @@ def policyList(dbConfig, intermediaryId, limit,):
             host=dbConfig['host'],
             port=dbConfig['port']
         )
-    except psycopg2.DatabaseError as e:
-        print("ERROR ==> ", e)
+    except psycopg2.Error as e:
+        printError(e)
         return None
     cursor = connection.cursor()
-    cursor.execute(QUERY)
+    try:
+        cursor.execute(QUERY)
+    except psycopg2.Error as e:
+        printError(e)
+        return None
     return cursor.fetchall()

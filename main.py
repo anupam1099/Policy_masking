@@ -1,23 +1,21 @@
 # imports
-import sys
 import json
 
 # assets
-from assets.constants import dbConfig, intermediaryId, limit
 from assets.dbQuery import policyList
 from assets.documentList import extract_documents
 from assets.generateLog import generateLog
+from assets.utils import startExecution, stopExecution
 
 # start driver code
-print("\n ----- Policy Pdf Engine & Chassis Number Mask Checker Started -----\n")
+startExecution()
 
 # import data from DB
-data = policyList(dbConfig, intermediaryId, limit)
+data = policyList()
 
 # query unsuccessfull
 if (data == None):
-    print("Exiting...")
-    sys.exit(0)
+    stopExecution()
 
 # extract all pdf links from data
 pdfLinks = extract_documents(data, 'prod')
